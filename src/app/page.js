@@ -8,6 +8,9 @@ export default function Home() {
     setLocation(e.target.value);
   };
   const handelClick = async () => {
+    if (location === undefined || NaN) {
+      alert("please enter a valid place name");
+    }
     const apiUrl = `https://api.weatherapi.com/v1/current.json?key=f858035b2a234d3a8f321234232710&q=${location}`;
     const response = await fetch(apiUrl);
     const data = await response.json();
