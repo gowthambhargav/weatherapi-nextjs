@@ -4,22 +4,22 @@ import "./globals.css";
 export default function Home() {
   const [location, setLocation] = useState();
   const [weather, setWeather] = useState();
+  const [btn, setBtn] = useState();
   const handelChange = (e) => {
     setLocation(e.target.value);
   };
   const handelClick = async () => {
-    if (location === undefined || NaN) {
+    if (location == undefined || NaN) {
       alert("please enter a valid place name");
-      setLocation("");
+    } else {
+      const apiUrl = `https://api.weatherapi.com/v1/current.json?key=f858035b2a234d3a8f321234232710&q=${location}`;
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      // console.log(data.current, "Current");
+      setWeather(data);
     }
-    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=f858035b2a234d3a8f321234232710&q=${location}`;
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    // console.log(data.current, "Current");
-    setWeather(data);
   };
-  // console.log(weather.current.location.tz_id);
-  console.log(weather);
+
   return (
     <div className="text-white">
       <h1 className="text-center text-3xl font-bold mt-9 text-yellow-400">
@@ -37,12 +37,14 @@ export default function Home() {
             onChange={handelChange}
             value={location}
           />
-          <button
-            onClick={handelClick}
-            className="ml-7 bg-slate-300 p-2 rounded-sm font-semibold text-black/80 cursor-pointer"
-          >
-            Search
-          </button>
+          {
+            <button
+              onClick={handelClick}
+              className="ml-7 bg-slate-300 p-2 rounded-sm font-semibold text-black/80 cursor-pointer"
+            >
+              Search
+            </button>
+          }
         </div>
         <div className="mt-6 text-2xl">
           <p>Timezone : {weather && weather.location.tz_id}</p>
