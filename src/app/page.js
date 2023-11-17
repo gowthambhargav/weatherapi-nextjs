@@ -12,7 +12,7 @@ export default function Home() {
     if (location == undefined || NaN) {
       alert("please enter a valid place name");
     } else {
-      const apiUrl = `https://api.weatherapi.com/v1/current.json?key=f858035b2a234d3a8f321234232710&q=${location}`;
+      const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${process.env.NEXT_PUBLIC_API_KEY}&q=${location}`;
       const response = await fetch(apiUrl);
       const data = await response.json();
       // console.log(data.current, "Current");
